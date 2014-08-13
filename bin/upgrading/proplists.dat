@@ -1534,6 +1534,13 @@ logproplist.opt_backdated:
   sortorder: 35
   ownership: user
 
+logproplist.opt_commentsclosed:
+  datatype: bool
+  des: Turn on to prevent new comments but leave old ones visible.
+  prettyname: Close Commenting
+  sortorder: 46
+  ownership: user
+
 logproplist.opt_nocomments:
   datatype: bool
   des: Turn on if readers can't post comments on this entry.

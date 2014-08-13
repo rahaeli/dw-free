@@ -705,8 +705,8 @@ sub _form_to_backend {
     # FIXME: remove this before taking the page out of beta
     $props->{opt_screening}  = $post->{opt_screening};
     $props->{opt_nocomments} = $post->{comment_settings} && $post->{comment_settings} eq "nocomments" ? 1 : 0;
+    $props->{opt_commentsclosed}    = $post->{comment_settings} && $post->{comment_settings} eq "commentsclosed" ? 1 : 0;
     $props->{opt_noemail}    = $post->{comment_settings} && $post->{comment_settings} eq "noemail" ? 1 : 0;
-
 
     # see if an "other" mood they typed in has an equivalent moodid
     if ( $props->{current_mood} ) {
@@ -832,6 +832,7 @@ sub _backend_to_form {
         opt_screening       => $entry->prop( "opt_screening" ),
         comment_settings    => $entry->prop( "opt_nocomments" ) ? "nocomments"
                             :  $entry->prop( "opt_noemail" ) ? "noemail"
+                            :  $entry->prop( "opt_commentsclosed" ) ? "commentsclosed"
                             : undef,
     );
 
@@ -1352,7 +1353,8 @@ sub preview_handler {
             count => "0",
             maxcomments => 0,
             enabled => ( $u->{opt_showtalklinks} eq "Y"
-                            && ! $form_req->{props}->{opt_nocomments} ) ? 1 : 0,
+                            && ! $form_req->{props}->{opt_nocomments} 
+                            && ! $form_req->{props}->{opt_commentsclosed} ) ? 1 : 0,
             screened => 0,
             });
 

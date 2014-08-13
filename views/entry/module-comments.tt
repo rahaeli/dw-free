@@ -24,6 +24,7 @@ the same terms as Perl itself.  For a copy of the license, please reference
         items = [
             ""              "Journal Default"
             "nocomments"    "Disabled"
+            "commentsclosed" "Closed"
             "noemail"       "Don't Email"
         ]
     ) -%]

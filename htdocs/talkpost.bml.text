@@ -49,6 +49,8 @@
 
 .opt.bannedfrom.comm= - you have been banned from commenting in this community.
 
+.opt.commentsclosed=Sorry, commenting on this entry is closed.
+
 .opt.defpic=(default)
 
 .opt.edit=Update Reply

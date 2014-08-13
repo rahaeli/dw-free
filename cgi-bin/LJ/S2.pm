@@ -2225,6 +2225,7 @@ sub Entry_from_entryobj
         moodthemeid => $moodthemeid,
         timeformat24 => $remote && $remote->use_24hour_time,
         admin_post => $entry_obj->admin_post,
+        has_closed_comments => $entry_obj->has_closed_comments,
         } );
 
     return $entry;

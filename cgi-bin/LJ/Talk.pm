@@ -1468,11 +1468,14 @@ sub talkform {
     return "Sorry, this journal is locked and comments cannot be posted to it or edited at this time."
         if $journalu->is_locked;
 
-    # check max comments only if posting a new comment (not when editing)
+    # check max comments and whether the entry is closed to new comments
+    # only if posting a new comment (not when editing)
     unless ($editid) {
         my $jitemid = $opts->{'ditemid'} >> 8;
         return "Sorry, this entry already has the maximum number of comments allowed."
             if LJ::Talk::Post::over_maxcomments($journalu, $jitemid);
+
+        return BML::ml( ".opt.commentsclosed" ) if $entry->has_closed_comments();
     }
 
     $ret .= "<form method='post' action='$LJ::SITEROOT/talkpost_do' id='postform'>";
@@ -3250,6 +3253,10 @@ sub init {
 
     if ( $ent->comments_disabled ) {
         $mlerr->("$SC.error.nocomments");
+    }
+
+    if ( $ent->has_closed_comments ) {
+        $mlerr->( "$SC.error.commentsclosed" );
     }
 
     if ($up) {

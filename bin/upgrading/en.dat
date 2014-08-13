@@ -695,6 +695,8 @@ entryform.comment.screening2=Comment Screening:
 
 entryform.comment.settings=Comment Settings:
 
+entryform.comment.settings.closecomments=Close Comments
+
 entryform.comment.settings.default=Default
 
 entryform.comment.settings.default2=Default (Journal Wide)

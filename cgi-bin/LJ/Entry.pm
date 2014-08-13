@@ -703,6 +703,7 @@ sub comment_info {
         screened_count => $screenedcount,
         show_readlink => $comments_enabled && ( $replycount || $has_screened ),
         show_postlink => $comments_enabled,
+        has_closed_comments => $self->has_closed_comments ? 1 : 0
     };
 }
 
@@ -1172,6 +1173,14 @@ sub comments_disabled_maintainer {
     my $self = $_[0];
 
     return $self->prop( 'opt_nocomments_maintainer' ) && !$self->comments_disabled_poster;
+}
+
+# check whether an entry has closed comments (all past comments remain visible
+# but new comments can't be posted to the entry)
+sub has_closed_comments {
+    my $self = $_[0];
+
+    return $self->prop( 'opt_commentsclosed' ) ? 1 : 0;
 }
 
 sub should_block_robots {
