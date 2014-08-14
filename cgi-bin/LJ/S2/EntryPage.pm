@@ -292,6 +292,7 @@ sub EntryPage
                 'hidden_child' => $com->{'hidden_child'},
                 'echi' => $com->{echi},
                 admin_post => $com->{'admin_post'} ? 1 : 0,
+                has_closed_comments => $entry->has_closed_comments ? 1 : 0
             };
 
             # don't show info from suspended users
@@ -589,7 +590,8 @@ sub EntryPage_entry
         userpic_style => S2::get_property_value( $opts->{ctx}, 'entry_userpic_style' ),
         permalink_url => $entry->url,
         timeformat24 => $remote && $remote->use_24hour_time,
-        admin_post => $entry->admin_post
+        admin_post => $entry->admin_post,
+        has_closed_comments => $entry->has_closed_comments ? 1 : 0
     } );
 
     return ($entry, $s2entry);

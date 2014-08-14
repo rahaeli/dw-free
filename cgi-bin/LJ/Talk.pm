@@ -3255,10 +3255,6 @@ sub init {
         $mlerr->("$SC.error.nocomments");
     }
 
-    if ( $ent->has_closed_comments ) {
-        $mlerr->( "$SC.error.commentsclosed" );
-    }
-
     if ($up) {
         if ($up->{'status'} eq "N" && !$up->is_identity && !LJ::Hooks::run_hook("journal_allows_unvalidated_commenting", $journalu)) {
             $mlerr->( "$SC.error.noverify2", { aopts => "href='$LJ::SITEROOT/register'" } );

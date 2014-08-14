@@ -242,6 +242,7 @@ sub ReplyPage
             'full' => 1,
             timeformat24 => $remote && $remote->use_24hour_time,
             admin_post => $cmtobj->admin_post ? 1 : 0,
+            has_closed_comments => $entry->has_closed_comments ? 1 : 0
         };
 
         # Conditionally add more links to the keyseq
