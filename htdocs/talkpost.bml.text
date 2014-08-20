@@ -85,6 +85,8 @@
 
 .opt.preview=Preview
 
+.opt.repliesonly=Sorry, this entry only allows you to reply to other comments, not to leave a new top-level comment of your own.
+
 .opt.siteuser=[[sitename]] account
 
 .opt.spellcheck=Spell check entry before posting

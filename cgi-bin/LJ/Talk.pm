@@ -1478,6 +1478,8 @@ sub talkform {
         return BML::ml( ".opt.commentsclosed" ) if $entry->has_closed_comments();
     }
 
+        return BML::ml( ".opt.repliesonly" ) if ( $entry->allows_replies_only() && !$opts->{replyto}+0 );
+
     $ret .= "<form method='post' action='$LJ::SITEROOT/talkpost_do' id='postform'>";
     $ret .= LJ::form_auth();
 

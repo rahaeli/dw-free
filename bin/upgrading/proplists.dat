@@ -1464,6 +1464,13 @@ logproplist.adult_content_reason:
   sortorder: 105
   ownership: user
 
+logproplist.allowreplies:
+  datatype: char
+  des: Controls allowed comments. A = to entire entry, R = to other comments only, C = new comments closed but old ones visible. Use legacy opt_nocomments for comments closed and not visible.
+  prettyname: Allow replies
+  sortorder: 105
+  ownership: user
+
 logproplist.commentalter:
   datatype: num
   des: Unix time of the last change to number of comments to this post.
@@ -1532,13 +1539,6 @@ logproplist.opt_backdated:
   des: Set to true if this item shouldn't show up on people's friends lists (because it occurred in the past)
   prettyname: Don't Show on Reading Pages
   sortorder: 35
-  ownership: user
-
-logproplist.opt_commentsclosed:
-  datatype: bool
-  des: Turn on to prevent new comments but leave old ones visible.
-  prettyname: Close Commenting
-  sortorder: 46
   ownership: user
 
 logproplist.opt_nocomments:

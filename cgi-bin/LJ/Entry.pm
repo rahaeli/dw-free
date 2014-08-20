@@ -703,7 +703,8 @@ sub comment_info {
         screened_count => $screenedcount,
         show_readlink => $comments_enabled && ( $replycount || $has_screened ),
         show_postlink => $comments_enabled,
-        has_closed_comments => $self->has_closed_comments ? 1 : 0
+        has_closed_comments => $self->has_closed_comments ? 1 : 0,
+        allows_replies_only => $self->allows_replies_only ? 1 : 0
     };
 }
 
@@ -1180,7 +1181,14 @@ sub comments_disabled_maintainer {
 sub has_closed_comments {
     my $self = $_[0];
 
-    return $self->prop( 'opt_commentsclosed' ) ? 1 : 0;
+    return $self->prop( 'allowreplies' ) eq 'C' ? 1 : 0;
+}
+
+# check whether an entry allows only replies to existing comments
+sub allows_replies_only {
+    my $self = $_[0];
+
+    return $self->prop ( 'allowreplies' ) eq 'R' ? 1 : 0;
 }
 
 sub should_block_robots {

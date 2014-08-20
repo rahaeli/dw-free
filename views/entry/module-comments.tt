@@ -5,8 +5,9 @@ will be phased out for new implementation
 
 Authors:
     Afuna <coder.dw@afunamatata.com>
+    Denise Paolucci <denise@dreamwidth.org>
 
-Copyright (c) 2011 by Dreamwidth Studios, LLC.
+Copyright (c) 2011-2014 by Dreamwidth Studios, LLC.
 
 This program is free software; you may redistribute it and/or modify it under
 the same terms as Perl itself.  For a copy of the license, please reference
@@ -16,32 +17,45 @@ the same terms as Perl itself.  For a copy of the license, please reference
   <fieldset class="comments_settings">
   <h3 class='ui-corner-top'>[% ".header" | ml %]</h3>
   <div class='inner'>
-  <p>
-    [%- form.select( label = "Comments:"
-        name = "comment_settings"
-        id = "comment_settings"
+ <p>
+    [%- form.select( label = "Allow replies:"
+        name = "allowreplies"
+        id = "allowreplies"
 
         items = [
-            ""              "Journal Default"
-            "nocomments"    "Disabled"
-            "commentsclosed" "Closed"
-            "noemail"       "Don't Email"
+            "A"                 "To entire entry"
+            "R"                 "To other comments only"
+            "C"                 "No, but show comments"
+            "opt_nocomments"    "No, hide all comments"
         ]
     ) -%]
   </p>
+
   <p>
-    [%- form.select( label = "Screening:"
+    [%- form.select( label = "Screen from:"
         name = "opt_screening"
         id = "opt_screening"
 
         items = [
-            ""      "Journal Default"
-            "N"     "Disabled"
+            ""      "(Journal Default)"
+            "N"     "No One"
             "R"     "Anonymous Only"
             "F"     "Non-access List"
-            "A"     "All Comments"
+            "A"     "Everyone"
         ]
     ) -%]
+
+  <p>
+    [%- form.select( label = "Email comments:"
+        name = "comment_settings"
+        id = "comment_settings"
+
+        items = [
+            ""          "(Journal Default)"
+            "noemail"   "Disable comment email"
+        ]
+    ) -%]
+  </p>
   </p>
   </div>
   </fieldset>

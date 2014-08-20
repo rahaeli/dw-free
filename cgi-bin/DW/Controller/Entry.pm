@@ -701,12 +701,16 @@ sub _form_to_backend {
 #     $req->{"prop_opt_preformatted"} ||= $POST->{'switched_rte_on'} ? 1 :
 #         $POST->{event_format} && $POST->{event_format} eq "preformatted" ? 1 : 0;
 
-    # old implementation of comments
-    # FIXME: remove this before taking the page out of beta
     $props->{opt_screening}  = $post->{opt_screening};
-    $props->{opt_nocomments} = $post->{comment_settings} && $post->{comment_settings} eq "nocomments" ? 1 : 0;
-    $props->{opt_commentsclosed}    = $post->{comment_settings} && $post->{comment_settings} eq "commentsclosed" ? 1 : 0;
+    $props->{allowreplies}   = $post->{allowreplies};
     $props->{opt_noemail}    = $post->{comment_settings} && $post->{comment_settings} eq "noemail" ? 1 : 0;
+
+    # we still use the legacy opt_nocomments for disabling comments
+    # on the entry and hiding all existing comments, because changing
+    # it would run the risk of breaking too much. so, we have to 
+    # invoke that logprop here specifically if it pertains:
+
+    $props->{opt_nocomments}    = $post->{allowreplies} eq "opt_nocomments" ? 1 : 0;
 
     # see if an "other" mood they typed in has an equivalent moodid
     if ( $props->{current_mood} ) {
@@ -828,12 +832,19 @@ sub _backend_to_form {
         # FIXME:
         # ...       => $entry->prop( "opt_preformatted" )
 
-        # FIXME: remove before taking the page out of beta
         opt_screening       => $entry->prop( "opt_screening" ),
-        comment_settings    => $entry->prop( "opt_nocomments" ) ? "nocomments"
-                            :  $entry->prop( "opt_noemail" ) ? "noemail"
-                            :  $entry->prop( "opt_commentsclosed" ) ? "commentsclosed"
-                            : undef,
+        comment_settings    => $entry->prop( "opt_noemail" ) ? "noemail" : undef,
+
+        # we still use the legacy 'opt_nocomments' logprop for disabling
+        # all comments on the entry and not showing existing comments,
+        # because changing it would risk breaking too much stuff. So,
+        # since opt_nocomments is the 'nuclear override' for closing
+        # comments in a more limited form, check the value of that prop
+        # and force-set the allowreplies dropdown to no comments; 
+        # otherwise, use the value of the logprop 'allowreplies'.
+
+        allowreplies        => $entry->prop( "opt_nocomments" ) ? "opt_nocomments" : $entry->prop( "allowreplies" )
+
     );
 
 

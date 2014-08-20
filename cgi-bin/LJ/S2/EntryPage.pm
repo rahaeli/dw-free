@@ -292,7 +292,8 @@ sub EntryPage
                 'hidden_child' => $com->{'hidden_child'},
                 'echi' => $com->{echi},
                 admin_post => $com->{'admin_post'} ? 1 : 0,
-                has_closed_comments => $entry->has_closed_comments ? 1 : 0
+                has_closed_comments => $entry->has_closed_comments ? 1 : 0,
+                allows_replies_only => $entry->allows_replies_only ? 1 : 0
             };
 
             # don't show info from suspended users

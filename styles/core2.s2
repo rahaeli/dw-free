@@ -259,6 +259,7 @@ class CommentInfo
     var bool show_postlink "Indicates whether the Post Comment link for this entry should be shown.";
     var bool show_readlink "Indicates whether the Read Comments link for this entry should be shown.";
     var bool has_closed_comments "Set to true if the owner has closed comments for this entry.";
+    var bool allows_replies_only "Set to true if the owner has set this entry to allow replies only, not new top-level comments";
 
     function print
     "Print all comment related links";
@@ -360,6 +361,7 @@ class EntryLite
     var readonly bool admin_post "Indicates if this is an official post to this community";
 
     var bool has_closed_comments "Set to true if the owner has closed comments for this entry.";
+    var bool allows_replies_only "Set to true if the owner has set this entry to allow replies only, not new top-level comments";
 
     function print_wrapper_start() "Start the wrapper for this entry or comment; includes anchor and classes";
     function print_wrapper_end() "End the wrapper for this entry or comment.";
@@ -2463,6 +2465,11 @@ property string text_closed_comments {
     example = "Comments closed";
 }
 
+property string text_replies_only {
+    des = "Text printed on entry's interaction links when the entry is set to allow replies to existing comments only, no new top-level comments";
+    example = "Replies only";
+}
+
 property string text_permalink {
     des = "Text for an entry's permanent link";
     note = "This is displayed when the entry subject contains links";
@@ -2479,6 +2486,7 @@ set text_post_comment_friends = "Reply";
 set text_max_comments = "Maximum comments reached";
 set text_permalink = "Link";
 set text_closed_comments = "Comments closed";
+set text_replies_only = "Replies only";
 
 ##=======================================
 ## Display properties - Text
@@ -5213,6 +5221,7 @@ function Comment::print_wrapper_start() {
     var string full = $this.full ? "full" : "partial";
     var string mod_post = $this.admin_post ? "admin-post" : "";
     var string has_closed_comments = $this.has_closed_comments ? "has_closed_comments" : "";
+    var string allows_replies_only = $this.allows_replies_only ? "allows_replies_only" : "";
 
     var string userpic = $this.userpic ? "has-userpic" : "no-userpic";
     var bool commenthassubject = ($.screened or $.frozen or $.echi != "" or $.subject != "") ? true : false;
@@ -5525,6 +5534,10 @@ function Entry::print_interaction_links(string target)
                 if ($.comments.has_closed_comments) {
                     """<li class="entry-replylink closed">""";
                     print safe "($*text_closed_comments)";
+                    "</li>\n";
+                } elseif ($.comments.allows_replies_only) {
+                    """<li class="entry-replylink closed">""";
+                    print safe "($*text_replies_only)";
                     "</li>\n";
                 } else {
                     if ($count == 1) {
@@ -6126,6 +6139,8 @@ function CommentInfo::print_postlink() {
         print safe "$*text_max_comments";
     } elseif ($.has_closed_comments) {
         print safe "$*text_closed_comments";
+    } elseif ($.allows_replies_only) {
+        print safe "$*text_replies_only";
     } else {
         print safe "<a href=\"$.post_url\">"+($p.view == "read" or $p.view == "network" ? $*text_post_comment_friends : $*text_post_comment)+"</a>";
     }
